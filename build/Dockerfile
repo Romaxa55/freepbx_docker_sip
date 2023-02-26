@@ -31,7 +31,7 @@ ENV ASTERISK_BUILD_DEPS 'autoconf \
                         libcurl4-openssl-dev \
                         libedit-dev \
                         libfftw3-dev \
-                        libgmime-2.6-dev \
+                        libgmime-3.0-dev \
                         libgsm1-dev \
                         libical-dev \
                         libiksemel-dev \
@@ -110,16 +110,16 @@ RUN echo "Package: libxml2*" > /etc/apt/preferences.d/libxml2 && \
                     libc-client2007e \
                     libcfg7 \
                     libcpg4 \
-                    libgmime-2.6 \
+                    libgmime-3.0-0 \
                     libical3 \
                     libiodbc2 \
                     libiksemel3 \
-                    libicu63 \
+                    libicu67 \
                     libicu-dev \
                     libneon27 \
                     libosptk4 \
                     libresample1 \
-                    libsnmp30 \
+                    libsnmp40 \
                     libspeexdsp1 \
                     libsrtp2-1 \
                     libunbound8 \
