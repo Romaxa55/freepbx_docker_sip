@@ -86,6 +86,7 @@ RUN echo "Package: libxml2*" > /etc/apt/preferences.d/libxml2 && \
                         libvpb-dev \
                         libxml2-dev \
                         libxslt1-dev \
+                        libtiff-tools \
                         portaudio19-dev \
                         python-dev \
                         subversion \
