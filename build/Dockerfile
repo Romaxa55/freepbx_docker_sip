@@ -97,6 +97,7 @@ RUN  apt-get install --no-install-recommends -y \
                     $ASTERISK_BUILD_DEPS \
                     apache2 \
                     composer \
+                    file \
                     fail2ban \
                     ffmpeg \
                     flite \
