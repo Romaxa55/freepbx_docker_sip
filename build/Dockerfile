@@ -205,7 +205,8 @@ RUN cd /usr/src && \
         --with-unixodbc \
         --with-uriparser \
         --with-vorbis \
-        --with-vpb \
+        --with-vpb  \
+        --includedir=/usr/local/include/ \
         && \
     \
     make menuselect/menuselect menuselect-tree menuselect.makeopts && \
