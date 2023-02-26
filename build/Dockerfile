@@ -2,7 +2,7 @@ FROM tiredofit/debian:bullseye
 LABEL maintainer="Dave Conroy (dave at tiredofit dot ca)"
 
 ### Set defaults
-ENV ASTERISK_VERSION=20.1.0 \
+ENV ASTERISK_VERSION=18.10.0 \
     BCG729_VERSION=1.1.1 \
     DONGLE_VERSION=20210904 \
     G72X_CPUHOST=penryn \
@@ -259,6 +259,9 @@ RUN mkdir -p /var/run/fail2ban && \
     apt-get -y autoremove && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+### FreePBX install
+
 ### FreePBX hacks
 RUN sed -i -e "s/memory_limit = 128M/memory_limit = 256M/g" /etc/php/${PHP_VERSION}/apache2/php.ini && \
     sed -i 's/\(^upload_max_filesize = \).*/\120M/' /etc/php/${PHP_VERSION}/apache2/php.ini && \
