@@ -241,16 +241,16 @@ RUN  mkdir -p /usr/src/asterisk-g72x && \
     ./configure --prefix=/usr --with-bcg729 --enable-$G72X_CPUHOST && \
     make && \
     make install
-##### Add USB Dongle support
-#RUN git clone https://github.com/rusxakep/asterisk-chan-dongle /usr/src/asterisk-chan-dongle && \
-#    cd /usr/src/asterisk-chan-dongle && \
-#    git checkout tags/$DONGLE_VERSION && \
-#    ./bootstrap && \
-#    ./configure --with-astversion=$ASTERISK_VERSION && \
-#    make && \
-#    make install && \
-#    \
-#    ldconfig
+#### Add USB Dongle support
+RUN git clone https://github.com/rusxakep/asterisk-chan-dongle /usr/src/asterisk-chan-dongle && \
+    cd /usr/src/asterisk-chan-dongle && \
+    git checkout tags/$DONGLE_VERSION && \
+    ./bootstrap && \
+    ./configure --with-astversion=$ASTERISK_VERSION && \
+    make && \
+    make install && \
+    \
+    ldconfig
 #### Cleanup
 #RUN mkdir -p /var/run/fail2ban && \
 #    cd / && \
