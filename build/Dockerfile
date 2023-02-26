@@ -226,78 +226,78 @@ RUN cd /usr/src && \
     make install-headers && \
     make config
 #### Add G729 codecs
-RUN  git clone https://github.com/BelledonneCommunications/bcg729 /usr/src/bcg729 && \
-    cd /usr/src/bcg729 && \
-    git checkout tags/$BCG729_VERSION && \
-    ./autogen.sh && \
-    ./configure --prefix=/usr --libdir=/lib && \
-    make && \
-    make install && \
-    \
-    mkdir -p /usr/src/asterisk-g72x && \
-    curl -sSLk https://bitbucket.org/arkadi/asterisk-g72x/get/master.tar.gz | tar xvfz - --strip 1 -C /usr/src/asterisk-g72x && \
-    cd /usr/src/asterisk-g72x && \
-    ./autogen.sh && \
-    ./configure --prefix=/usr --with-bcg729 --enable-$G72X_CPUHOST && \
-    make && \
-    make install
-#### Add USB Dongle support
-RUN git clone https://github.com/rusxakep/asterisk-chan-dongle /usr/src/asterisk-chan-dongle && \
-    cd /usr/src/asterisk-chan-dongle && \
-    git checkout tags/$DONGLE_VERSION && \
-    ./bootstrap && \
-    ./configure --with-astversion=$ASTERISK_VERSION && \
-    make && \
-    make install && \
-    \
-    ldconfig
-### Cleanup
-RUN mkdir -p /var/run/fail2ban && \
-    cd / && \
-    rm -rf /usr/src/* /tmp/* /etc/cron* && \
-    apt-get purge -y $ASTERISK_BUILD_DEPS && \
-    apt-get -y autoremove && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-### FreePBX hacks
-RUN sed -i -e "s/memory_limit = 128M/memory_limit = 256M/g" /etc/php/${PHP_VERSION}/apache2/php.ini && \
-    sed -i 's/\(^upload_max_filesize = \).*/\120M/' /etc/php/${PHP_VERSION}/apache2/php.ini && \
-    a2disconf other-vhosts-access-log.conf && \
-    a2enmod rewrite && \
-    a2enmod headers && \
-    rm -rf /var/log/* && \
-    mkdir -p /var/log/asterisk && \
-    mkdir -p /var/log/apache2 && \
-    mkdir -p /var/log/httpd && \
-    update-alternatives --set php /usr/bin/php${PHP_VERSION}
-### Zabbix setup
-RUN  echo '%zabbix ALL=(asterisk) NOPASSWD:/usr/sbin/asterisk' >> /etc/sudoers
-
-### Setup for data persistence
-RUN  mkdir -p /assets/config/var/lib/ /assets/config/home/ && \
-    mv /home/asterisk /assets/config/home/ && \
-    ln -s /data/home/asterisk /home/asterisk && \
-    mv /var/lib/asterisk /assets/config/var/lib/ && \
-    ln -s /data/var/lib/asterisk /var/lib/asterisk && \
-    ln -s /data/usr/local/fop2 /usr/local/fop2 && \
-    mkdir -p /assets/config/var/run/ && \
-    mv /var/run/asterisk /assets/config/var/run/ && \
-    mv /var/lib/mysql /assets/config/var/lib/ && \
-    mkdir -p /assets/config/var/spool && \
-    mv /var/spool/cron /assets/config/var/spool/ && \
-    ln -s /data/var/spool/cron /var/spool/cron && \
-    mkdir -p /var/run/mongodb && \
-    rm -rf /var/lib/mongodb && \
-    ln -s /data/var/lib/mongodb /var/lib/mongodb && \
-    ln -s /data/var/run/asterisk /var/run/asterisk && \
-    rm -rf /var/spool/asterisk && \
-    ln -s /data/var/spool/asterisk /var/spool/asterisk && \
-    rm -rf /etc/asterisk && \
-    ln -s /data/etc/asterisk /etc/asterisk && \
-    ln -s /usr/sbin/crontab /usr/bin/crontab
-
-### Networking configuration
-EXPOSE 80 443 4445 4569 5060/udp 5160/udp 5061 5161 8001 8003 8008 8009 8025 ${RTP_START}-${RTP_FINISH}/udp
-
-### Files add
-ADD install /
+#RUN  git clone https://github.com/BelledonneCommunications/bcg729 /usr/src/bcg729 && \
+#    cd /usr/src/bcg729 && \
+#    git checkout tags/$BCG729_VERSION && \
+#    ./autogen.sh && \
+#    ./configure --prefix=/usr --libdir=/lib && \
+#    make && \
+#    make install && \
+#    \
+#    mkdir -p /usr/src/asterisk-g72x && \
+#    curl -sSLk https://bitbucket.org/arkadi/asterisk-g72x/get/master.tar.gz | tar xvfz - --strip 1 -C /usr/src/asterisk-g72x && \
+#    cd /usr/src/asterisk-g72x && \
+#    ./autogen.sh && \
+#    ./configure --prefix=/usr --with-bcg729 --enable-$G72X_CPUHOST && \
+#    make && \
+#    make install
+##### Add USB Dongle support
+#RUN git clone https://github.com/rusxakep/asterisk-chan-dongle /usr/src/asterisk-chan-dongle && \
+#    cd /usr/src/asterisk-chan-dongle && \
+#    git checkout tags/$DONGLE_VERSION && \
+#    ./bootstrap && \
+#    ./configure --with-astversion=$ASTERISK_VERSION && \
+#    make && \
+#    make install && \
+#    \
+#    ldconfig
+#### Cleanup
+#RUN mkdir -p /var/run/fail2ban && \
+#    cd / && \
+#    rm -rf /usr/src/* /tmp/* /etc/cron* && \
+#    apt-get purge -y $ASTERISK_BUILD_DEPS && \
+#    apt-get -y autoremove && \
+#    apt-get clean && \
+#    rm -rf /var/lib/apt/lists/*
+#### FreePBX hacks
+#RUN sed -i -e "s/memory_limit = 128M/memory_limit = 256M/g" /etc/php/${PHP_VERSION}/apache2/php.ini && \
+#    sed -i 's/\(^upload_max_filesize = \).*/\120M/' /etc/php/${PHP_VERSION}/apache2/php.ini && \
+#    a2disconf other-vhosts-access-log.conf && \
+#    a2enmod rewrite && \
+#    a2enmod headers && \
+#    rm -rf /var/log/* && \
+#    mkdir -p /var/log/asterisk && \
+#    mkdir -p /var/log/apache2 && \
+#    mkdir -p /var/log/httpd && \
+#    update-alternatives --set php /usr/bin/php${PHP_VERSION}
+#### Zabbix setup
+#RUN  echo '%zabbix ALL=(asterisk) NOPASSWD:/usr/sbin/asterisk' >> /etc/sudoers
+#
+#### Setup for data persistence
+#RUN  mkdir -p /assets/config/var/lib/ /assets/config/home/ && \
+#    mv /home/asterisk /assets/config/home/ && \
+#    ln -s /data/home/asterisk /home/asterisk && \
+#    mv /var/lib/asterisk /assets/config/var/lib/ && \
+#    ln -s /data/var/lib/asterisk /var/lib/asterisk && \
+#    ln -s /data/usr/local/fop2 /usr/local/fop2 && \
+#    mkdir -p /assets/config/var/run/ && \
+#    mv /var/run/asterisk /assets/config/var/run/ && \
+#    mv /var/lib/mysql /assets/config/var/lib/ && \
+#    mkdir -p /assets/config/var/spool && \
+#    mv /var/spool/cron /assets/config/var/spool/ && \
+#    ln -s /data/var/spool/cron /var/spool/cron && \
+#    mkdir -p /var/run/mongodb && \
+#    rm -rf /var/lib/mongodb && \
+#    ln -s /data/var/lib/mongodb /var/lib/mongodb && \
+#    ln -s /data/var/run/asterisk /var/run/asterisk && \
+#    rm -rf /var/spool/asterisk && \
+#    ln -s /data/var/spool/asterisk /var/spool/asterisk && \
+#    rm -rf /etc/asterisk && \
+#    ln -s /data/etc/asterisk /etc/asterisk && \
+#    ln -s /usr/sbin/crontab /usr/bin/crontab
+#
+#### Networking configuration
+#EXPOSE 80 443 4445 4569 5060/udp 5160/udp 5061 5161 8001 8003 8008 8009 8025 ${RTP_START}-${RTP_FINISH}/udp
+#
+#### Files add
+#ADD install /
