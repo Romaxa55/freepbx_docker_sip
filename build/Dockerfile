@@ -163,16 +163,18 @@ RUN  apt-get install --no-install-recommends -y \
     \
 ### Add users
     addgroup --gid 2600 asterisk && \
-    adduser --uid 2600 --gid 2600 --gecos "Asterisk User" --disabled-password asterisk
+    adduser --uid 2600 --gid 2600 --gecos "Asterisk User" --disabled-password asterisk && \
+     \
 ### Build SpanDSP
-RUN  mkdir -p /usr/src/spandsp && \
+    mkdir -p /usr/src/spandsp && \
     curl -ssLk http://sources.buildroot.net/spandsp/spandsp-${SPANDSP_VERSION}.tar.gz | tar xvfz - --strip 1 -C /usr/src/spandsp && \
     cd /usr/src/spandsp && \
     ./configure --prefix=/usr && \
     make && \
-    make install
+    make install && \
+     \
 ### Build Asterisk
-RUN  cd /usr/src && \
+    cd /usr/src && \
     mkdir -p asterisk && \
     curl -sSLk http://downloads.asterisk.org/pub/telephony/asterisk/releases/asterisk-${ASTERISK_VERSION}.tar.gz | tar xvfz - --strip 1 -C /usr/src/asterisk && \
     cd /usr/src/asterisk/ && \
