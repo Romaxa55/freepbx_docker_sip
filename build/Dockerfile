@@ -13,6 +13,67 @@ ENV ASTERISK_VERSION=18.10.0 \
     RTP_START=18000 \
     RTP_FINISH=20000
 
+ENV ASTERISK_BUILD_DEPS='\
+                        autoconf \
+                        automake \
+                        bison \
+                        binutils-dev \
+                        build-essential \
+                        doxygen \
+                        flex \
+                        graphviz \
+                        libasound2-dev \
+                        libbluetooth-dev \
+                        libc-client2007e-dev \
+                        libcfg-dev \
+                        libcodec2-dev \
+                        libcorosync-common-dev \
+                        libcpg-dev \
+                        libcurl4-openssl-dev \
+                        libedit-dev \
+                        libfftw3-dev \
+                        libgmime-2.6-dev \
+                        libgsm1-dev \
+                        libical-dev \
+                        libiksemel-dev \
+                        libjansson-dev \
+                        libldap2-dev \
+                        liblua5.2-dev \
+                        libmariadb-dev \
+                        libmariadbclient-dev \
+                        libmp3lame-dev \
+                        libncurses5-dev \
+                        libneon27-dev \
+                        libnewt-dev \
+                        libogg-dev \
+                        libopus-dev \
+                        libosptk-dev \
+                        libpopt-dev \
+                        libradcli-dev \
+                        libresample1-dev \
+                        libsndfile1-dev \
+                        libsnmp-dev \
+                        libspeex-dev \
+                        libspeexdsp-dev \
+                        libsqlite3-dev \
+                        libsrtp2-dev \
+                        libssl-dev \
+                        libtiff-dev \
+                        libtool-bin \
+                        libunbound-dev \
+                        liburiparser-dev \
+                        libvorbis-dev \
+                        libvpb-dev \
+                        libxml2-dev \
+                        libxslt1-dev \
+                        portaudio19-dev \
+                        python-dev \
+                        subversion \
+                        unixodbc-dev \
+                        uuid-dev \
+                        zlib1g-dev'
+
+
 ### Pin libxml2 packages to Debian repositories
 RUN echo "Package: libxml2*" > /etc/apt/preferences.d/libxml2 && \
     echo "Pin: release o=Debian,n=bullseye" >> /etc/apt/preferences.d/libxml2 && \
@@ -30,72 +91,13 @@ RUN echo "Package: libxml2*" > /etc/apt/preferences.d/libxml2 && \
     echo "deb http://ftp.us.debian.org/debian/ bullseye-backports main" > /etc/apt/sources.list.d/backports.list && \
     echo "deb-src http://ftp.us.debian.org/debian/ bullseye-backports main" >> /etc/apt/sources.list.d/backports.list && \
     apt-get update && \
-    apt-get -o Dpkg::Options::="--force-confold" upgrade -y
+    apt-get -o Dpkg::Options::="--force-confold" upgrade -y \
+
 ### Install runtime dependencies
-RUN  apt-get install --no-install-recommends -y \
-                    autoconf \
-                    automake \
-                    bison \
-                    binutils-dev \
-                    build-essential \
-                    doxygen \
-                    flex \
-                    graphviz \
-                    libasound2-dev \
-                    libbluetooth-dev \
-                    libc-client2007e-dev \
-                    libcfg-dev \
-                    libcodec2-dev \
-                    libcorosync-common-dev \
-                    libcpg-dev \
-                    libcurl4-openssl-dev \
-                    libedit-dev \
-                    libfftw3-dev \
-                    libgmime-3.0-dev \
-                    libgsm1-dev \
-                    libical-dev \
-                    libiksemel-dev \
-                    libjansson-dev \
-                    libldap2-dev \
-                    cmake \
-                    liblua5.2-dev \
-                    libmariadb-dev \
-                    libmariadb-dev-compat \
-                    libmp3lame-dev \
-                    libncurses5-dev \
-                    libneon27-dev \
-                    libnewt-dev \
-                    libogg-dev \
-                    libopus-dev \
-                    libosptk-dev \
-                    libpopt-dev \
-                    libradcli-dev \
-                    libresample1-dev \
-                    libsndfile1-dev \
-                    libsnmp-dev \
-                    libspeex-dev \
-                    libspeexdsp-dev \
-                    libsqlite3-dev \
-                    libsrtp2-dev \
-                    libssl-dev \
-                    libtiff5-dev \
-                    libtool-bin \
-                    libunbound-dev \
-                    liburiparser-dev \
-                    libvorbis-dev \
-                    libvpb-dev \
-                    libxml2-dev \
-                    libxslt1-dev \
-                    libtiff-tools \
-                    portaudio19-dev \
-                    python-dev \
-                    subversion \
-                    unixodbc-dev \
-                    uuid-dev \
-                    zlib1g-dev \
+    apt-get install --no-install-recommends -y \
+                    $ASTERISK_BUILD_DEPS \
                     apache2 \
                     composer \
-                    file \
                     fail2ban \
                     ffmpeg \
                     flite \
@@ -109,16 +111,16 @@ RUN  apt-get install --no-install-recommends -y \
                     libc-client2007e \
                     libcfg7 \
                     libcpg4 \
-                    libgmime-3.0-0 \
+                    libgmime-2.6 \
                     libical3 \
                     libiodbc2 \
                     libiksemel3 \
-                    libicu67 \
+                    libicu63 \
                     libicu-dev \
                     libneon27 \
                     libosptk4 \
                     libresample1 \
-                    libsnmp40 \
+                    libsnmp30 \
                     libspeexdsp1 \
                     libsrtp2-1 \
                     libunbound8 \
@@ -159,7 +161,6 @@ RUN  apt-get install --no-install-recommends -y \
                     wget \
                     whois \
                     xmlstarlet
-
 ### Add users
 RUN addgroup --gid 2600 asterisk && \
     adduser --uid 2600 --gid 2600 --gecos "Asterisk User" --disabled-password asterisk
