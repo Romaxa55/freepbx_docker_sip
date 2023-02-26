@@ -90,7 +90,7 @@ RUN echo "Package: libxml2*" > /etc/apt/preferences.d/libxml2 && \
     echo "deb http://ftp.us.debian.org/debian/ bullseye-backports main" > /etc/apt/sources.list.d/backports.list && \
     echo "deb-src http://ftp.us.debian.org/debian/ bullseye-backports main" >> /etc/apt/sources.list.d/backports.list && \
     apt-get update && \
-    apt-get -o Dpkg::Options::="--force-confold" upgrade -y \
+    apt-get -o Dpkg::Options::="--force-confold" upgrade -y && \
 
 ### Install runtime dependencies
     apt-get install --no-install-recommends -y \
