@@ -168,12 +168,12 @@ RUN addgroup --gid 2600 asterisk && \
     adduser --uid 2600 --gid 2600 --gecos "Asterisk User" --disabled-password asterisk
 
 ### Build SpanDSP
-RUN mkdir -p /usr/src/spandsp && \
-    curl -ssLk http://sources.buildroot.net/spandsp/spandsp-${SPANDSP_VERSION}.tar.gz | tar xvfz - --strip 1 -C /usr/src/spandsp && \
-    cd /usr/src/spandsp && \
-    ./configure --prefix=/usr --includedir=/usr/local/include/ && \
-    make && \
-    make install
+#RUN mkdir -p /usr/src/spandsp && \
+#    curl -ssLk http://sources.buildroot.net/spandsp/spandsp-${SPANDSP_VERSION}.tar.gz | tar xvfz - --strip 1 -C /usr/src/spandsp && \
+#    cd /usr/src/spandsp && \
+#    ./configure --prefix=/usr --includedir=/usr/local/include/ && \
+#    make && \
+#    make install
 #### Build Asterisk
 #RUN cd /usr/src && \
 #    mkdir -p asterisk && \
