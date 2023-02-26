@@ -234,13 +234,13 @@ RUN  git clone https://github.com/BelledonneCommunications/bcg729 /usr/src/bcg72
     make && \
     make install
 
-#RUN  mkdir -p /usr/src/asterisk-g72x && \
-#    curl -sSLk https://bitbucket.org/arkadi/asterisk-g72x/get/master.tar.gz | tar xvfz - --strip 1 -C /usr/src/asterisk-g72x && \
-#    cd /usr/src/asterisk-g72x && \
-#    ./autogen.sh && \
-#    ./configure --prefix=/usr --with-bcg729 --enable-$G72X_CPUHOST && \
-#    make && \
-#    make install
+RUN  mkdir -p /usr/src/asterisk-g72x && \
+    curl -sSLk https://bitbucket.org/arkadi/asterisk-g72x/get/master.tar.gz | tar xvfz - --strip 1 -C /usr/src/asterisk-g72x && \
+    cd /usr/src/asterisk-g72x && \
+    ./autogen.sh && \
+    ./configure --prefix=/usr --with-bcg729 --enable-$G72X_CPUHOST && \
+    make && \
+    make install
 ##### Add USB Dongle support
 #RUN git clone https://github.com/rusxakep/asterisk-chan-dongle /usr/src/asterisk-chan-dongle && \
 #    cd /usr/src/asterisk-chan-dongle && \
