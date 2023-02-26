@@ -39,7 +39,7 @@ ENV ASTERISK_BUILD_DEPS 'autoconf \
                         libldap2-dev \
                         liblua5.2-dev \
                         libmariadb-dev \
-                        libmariadbclient-dev \
+                        libmariadb-dev-compat \
                         libmp3lame-dev \
                         libncurses5-dev \
                         libneon27-dev \
