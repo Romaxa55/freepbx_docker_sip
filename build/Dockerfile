@@ -1,5 +1,5 @@
 FROM tiredofit/debian:bullseye
-LABEL maintainer="Dave Conroy (dave at tiredofit dot ca)"
+LABEL maintainer="Roman Shamagin fork from Dave Conroy (dave at tiredofit dot ca)"
 
 ### Set defaults
 ENV ASTERISK_VERSION=18.10.0 \
@@ -18,6 +18,7 @@ ENV ASTERISK_BUILD_DEPS 'autoconf \
                         bison \
                         binutils-dev \
                         build-essential \
+                        cmake \
                         doxygen \
                         flex \
                         graphviz \
