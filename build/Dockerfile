@@ -57,6 +57,7 @@ RUN  apt-get install --no-install-recommends -y \
                     libiksemel-dev \
                     libjansson-dev \
                     libldap2-dev \
+                    cmake \
                     liblua5.2-dev \
                     libmariadb-dev \
                     libmariadb-dev-compat \
@@ -225,16 +226,15 @@ RUN cd /usr/src && \
     make install && \
     make install-headers && \
     make config
-#### Add G729 codecs
-#RUN  git clone https://github.com/BelledonneCommunications/bcg729 /usr/src/bcg729 && \
-#    cd /usr/src/bcg729 && \
-#    git checkout tags/$BCG729_VERSION && \
-#    ./autogen.sh && \
-#    ./configure --prefix=/usr --libdir=/lib && \
-#    make && \
-#    make install && \
-#    \
-#    mkdir -p /usr/src/asterisk-g72x && \
+### Add G729 codecs
+RUN  git clone https://github.com/BelledonneCommunications/bcg729 /usr/src/bcg729 && \
+    cd /usr/src/bcg729 && \
+    git checkout tags/$BCG729_VERSION && \
+    cmake . -DCMAKE_INSTALL_PREFIX=/usr && \
+    make && \
+    make install
+
+#RUN  mkdir -p /usr/src/asterisk-g72x && \
 #    curl -sSLk https://bitbucket.org/arkadi/asterisk-g72x/get/master.tar.gz | tar xvfz - --strip 1 -C /usr/src/asterisk-g72x && \
 #    cd /usr/src/asterisk-g72x && \
 #    ./autogen.sh && \
