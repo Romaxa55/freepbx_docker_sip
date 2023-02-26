@@ -91,10 +91,9 @@ RUN echo "Package: libxml2*" > /etc/apt/preferences.d/libxml2 && \
                         subversion \
                         unixodbc-dev \
                         uuid-dev \
-                        zlib1g-dev' && \
-    \
+                        zlib1g-dev' &&
 ### Install runtime dependencies
-    apt-get install --no-install-recommends -y \
+RUN  apt-get install --no-install-recommends -y \
                     $ASTERISK_BUILD_DEPS \
                     apache2 \
                     composer \
@@ -164,18 +163,16 @@ RUN echo "Package: libxml2*" > /etc/apt/preferences.d/libxml2 && \
     \
 ### Add users
     addgroup --gid 2600 asterisk && \
-    adduser --uid 2600 --gid 2600 --gecos "Asterisk User" --disabled-password asterisk && \
-    \
+    adduser --uid 2600 --gid 2600 --gecos "Asterisk User" --disabled-password asterisk
 ### Build SpanDSP
-    mkdir -p /usr/src/spandsp && \
+RUN  mkdir -p /usr/src/spandsp && \
     curl -ssLk http://sources.buildroot.net/spandsp/spandsp-${SPANDSP_VERSION}.tar.gz | tar xvfz - --strip 1 -C /usr/src/spandsp && \
     cd /usr/src/spandsp && \
     ./configure --prefix=/usr && \
     make && \
-    make install && \
-    \
+    make install
 ### Build Asterisk
-    cd /usr/src && \
+RUN  cd /usr/src && \
     mkdir -p asterisk && \
     curl -sSLk http://downloads.asterisk.org/pub/telephony/asterisk/releases/asterisk-${ASTERISK_VERSION}.tar.gz | tar xvfz - --strip 1 -C /usr/src/asterisk && \
     cd /usr/src/asterisk/ && \
@@ -228,10 +225,9 @@ RUN echo "Package: libxml2*" > /etc/apt/preferences.d/libxml2 && \
     make && \
     make install && \
     make install-headers && \
-    make config && \
-    \
+    make config
 #### Add G729 codecs
-    git clone https://github.com/BelledonneCommunications/bcg729 /usr/src/bcg729 && \
+RUN  git clone https://github.com/BelledonneCommunications/bcg729 /usr/src/bcg729 && \
     cd /usr/src/bcg729 && \
     git checkout tags/$BCG729_VERSION && \
     ./autogen.sh && \
@@ -245,10 +241,9 @@ RUN echo "Package: libxml2*" > /etc/apt/preferences.d/libxml2 && \
     ./autogen.sh && \
     ./configure --prefix=/usr --with-bcg729 --enable-$G72X_CPUHOST && \
     make && \
-    make install && \
-    \
+    make install
 #### Add USB Dongle support
-    git clone https://github.com/rusxakep/asterisk-chan-dongle /usr/src/asterisk-chan-dongle && \
+RUN git clone https://github.com/rusxakep/asterisk-chan-dongle /usr/src/asterisk-chan-dongle && \
     cd /usr/src/asterisk-chan-dongle && \
     git checkout tags/$DONGLE_VERSION && \
     ./bootstrap && \
@@ -256,19 +251,17 @@ RUN echo "Package: libxml2*" > /etc/apt/preferences.d/libxml2 && \
     make && \
     make install && \
     \
-    ldconfig && \
-    \
+    ldconfig
 ### Cleanup
-    mkdir -p /var/run/fail2ban && \
+RUN mkdir -p /var/run/fail2ban && \
     cd / && \
     rm -rf /usr/src/* /tmp/* /etc/cron* && \
     apt-get purge -y $ASTERISK_BUILD_DEPS && \
     apt-get -y autoremove && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    \
+    rm -rf /var/lib/apt/lists/*
 ### FreePBX hacks
-    sed -i -e "s/memory_limit = 128M/memory_limit = 256M/g" /etc/php/${PHP_VERSION}/apache2/php.ini && \
+RUN sed -i -e "s/memory_limit = 128M/memory_limit = 256M/g" /etc/php/${PHP_VERSION}/apache2/php.ini && \
     sed -i 's/\(^upload_max_filesize = \).*/\120M/' /etc/php/${PHP_VERSION}/apache2/php.ini && \
     a2disconf other-vhosts-access-log.conf && \
     a2enmod rewrite && \
@@ -277,13 +270,12 @@ RUN echo "Package: libxml2*" > /etc/apt/preferences.d/libxml2 && \
     mkdir -p /var/log/asterisk && \
     mkdir -p /var/log/apache2 && \
     mkdir -p /var/log/httpd && \
-    update-alternatives --set php /usr/bin/php${PHP_VERSION} && \
-    \
+    update-alternatives --set php /usr/bin/php${PHP_VERSION}
 ### Zabbix setup
-    echo '%zabbix ALL=(asterisk) NOPASSWD:/usr/sbin/asterisk' >> /etc/sudoers && \
-    \
+RUN  echo '%zabbix ALL=(asterisk) NOPASSWD:/usr/sbin/asterisk' >> /etc/sudoers
+
 ### Setup for data persistence
-    mkdir -p /assets/config/var/lib/ /assets/config/home/ && \
+RUN  mkdir -p /assets/config/var/lib/ /assets/config/home/ && \
     mv /home/asterisk /assets/config/home/ && \
     ln -s /data/home/asterisk /home/asterisk && \
     mv /var/lib/asterisk /assets/config/var/lib/ && \
