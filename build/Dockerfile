@@ -91,7 +91,7 @@ RUN echo "Package: libxml2*" > /etc/apt/preferences.d/libxml2 && \
                         subversion \
                         unixodbc-dev \
                         uuid-dev \
-                        zlib1g-dev' &&
+                        zlib1g-dev'
 ### Install runtime dependencies
 RUN  apt-get install --no-install-recommends -y \
                     $ASTERISK_BUILD_DEPS \
