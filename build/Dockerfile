@@ -14,64 +14,64 @@ ENV ASTERISK_VERSION=18.10.0 \
     RTP_FINISH=20000
 
 ENV ASTERISK_BUILD_DEPS='\
-                        autoconf \
-                        automake \
-                        bison \
-                        binutils-dev \
-                        build-essential \
-                        doxygen \
-                        flex \
-                        graphviz \
-                        libasound2-dev \
-                        libbluetooth-dev \
-                        libc-client2007e-dev \
-                        libcfg-dev \
-                        libcodec2-dev \
-                        libcorosync-common-dev \
-                        libcpg-dev \
-                        libcurl4-openssl-dev \
-                        libedit-dev \
-                        libfftw3-dev \
-                        libgmime-2.6-dev \
-                        libgsm1-dev \
-                        libical-dev \
-                        libiksemel-dev \
-                        libjansson-dev \
-                        libldap2-dev \
-                        liblua5.2-dev \
-                        libmariadb-dev \
-                        libmariadbclient-dev \
-                        libmp3lame-dev \
-                        libncurses5-dev \
-                        libneon27-dev \
-                        libnewt-dev \
-                        libogg-dev \
-                        libopus-dev \
-                        libosptk-dev \
-                        libpopt-dev \
-                        libradcli-dev \
-                        libresample1-dev \
-                        libsndfile1-dev \
-                        libsnmp-dev \
-                        libspeex-dev \
-                        libspeexdsp-dev \
-                        libsqlite3-dev \
-                        libsrtp2-dev \
-                        libssl-dev \
-                        libtiff-dev \
-                        libtool-bin \
-                        libunbound-dev \
-                        liburiparser-dev \
-                        libvorbis-dev \
-                        libvpb-dev \
-                        libxml2-dev \
-                        libxslt1-dev \
-                        portaudio19-dev \
-                        python-dev \
-                        subversion \
-                        unixodbc-dev \
-                        uuid-dev \
-                        zlib1g-dev'
+autoconf \
+automake \
+bison \
+binutils-dev \
+build-essential \
+doxygen \
+flex \
+graphviz \
+libasound2-dev \
+libbluetooth-dev \
+libc-client2007e-dev \
+libcfg-dev \
+libcodec2-dev \
+libcorosync-common-dev \
+libcpg-dev \
+libcurl4-openssl-dev \
+libedit-dev \
+libfftw3-dev \
+libgmime-2.6-dev \
+libgsm1-dev \
+libical-dev \
+libiksemel-dev \
+libjansson-dev \
+libldap2-dev \
+liblua5.2-dev \
+libmariadb-dev \
+libmariadbclient-dev \
+libmp3lame-dev \
+libncurses5-dev \
+libneon27-dev \
+libnewt-dev \
+libogg-dev \
+libopus-dev \
+libosptk-dev \
+libpopt-dev \
+libradcli-dev \
+libresample1-dev \
+libsndfile1-dev \
+libsnmp-dev \
+libspeex-dev \
+libspeexdsp-dev \
+libsqlite3-dev \
+libsrtp2-dev \
+libssl-dev \
+libtiff-dev \
+libtool-bin \
+libunbound-dev \
+liburiparser-dev \
+libvorbis-dev \
+libvpb-dev \
+libxml2-dev \
+libxslt1-dev \
+portaudio19-dev \
+python-dev \
+subversion \
+unixodbc-dev \
+uuid-dev \
+zlib1g-dev'
 
 
 ### Pin libxml2 packages to Debian repositories
@@ -209,20 +209,20 @@ RUN cd /usr/src && \
     \
     make menuselect/menuselect menuselect-tree menuselect.makeopts && \
     menuselect/menuselect --disable BUILD_NATIVE \
-                          --enable-category MENUSELECT_ADDONS \
-                          --enable-category MENUSELECT_APPS \
-                          --enable-category MENUSELECT_CHANNELS \
-                          --enable-category MENUSELECT_CODECS \
-                          --enable-category MENUSELECT_FORMATS \
-                          --enable-category MENUSELECT_FUNCS \
-                          --enable-category MENUSELECT_RES \
-                          --enable BETTER_BACKTRACES \
-                          --disable MOH-OPSOUND-WAV \
-                          --enable MOH-OPSOUND-GSM \
-                          --disable app_voicemail_imap \
-                          --disable app_voicemail_odbc \
-                          --disable res_digium_phone \
-                          --disable codec_g729a && \
+  --enable-category MENUSELECT_ADDONS \
+  --enable-category MENUSELECT_APPS \
+  --enable-category MENUSELECT_CHANNELS \
+  --enable-category MENUSELECT_CODECS \
+  --enable-category MENUSELECT_FORMATS \
+  --enable-category MENUSELECT_FUNCS \
+  --enable-category MENUSELECT_RES \
+  --enable BETTER_BACKTRACES \
+  --disable MOH-OPSOUND-WAV \
+  --enable MOH-OPSOUND-GSM \
+  --disable app_voicemail_imap \
+  --disable app_voicemail_odbc \
+  --disable res_digium_phone \
+  --disable codec_g729a && \
     make && \
     make install && \
     make install-headers && \
